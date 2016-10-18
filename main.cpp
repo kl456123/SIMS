@@ -8,6 +8,27 @@
 
 using namespace std;
 
+
+void readByCin(auto& value) {
+	while(1) {
+		cin>>value;
+		if(cin.fail()) {
+			cout<<"input fail"<<endl;
+			cout<<"please input again"<<endl;
+
+			//clear cin
+			cin.clear();
+			cin.ignore(4096,'\n');
+
+		}
+		else {
+			break;
+		}
+
+	}
+}
+
+
 class Student {
 	public:
 		string studentName;
@@ -61,17 +82,22 @@ class Student {
 		void readValues() {
 			cout<<"please enter student information"<<endl;
 			cout<<"student name: ";
-			cin>>studentName;
+			//			cin>>studentName;
+			readByCin(studentName);
 			cout<<"studentID: ";
-			cin>>studentID;
+			//			cin>>studentID;
+			readByCin(studentID);
 			cout<<"sex: (0 means for female and 1 means for male)";
-			cin>>sex;
+			//			cin>>sex;
+			readByCin(sex);
 			cout<<"student birth: ";
-			cin>>birth;
+			//			cin>>birth;
+			readByCin(birth);
 			cout<<"all scores: ";
 			int score;
 			for (int i=0; i<3; i++) {
-				cin>>score;
+				//				cin>>score;
+				readByCin(score);
 				scores.push_back(score);
 			}
 			_getSumOfScores();
@@ -81,7 +107,10 @@ class Student {
 
 		void setScores() {
 			cout<<"please input three item of scores"<<endl;
-			cin>>scores[0]>>scores[1]>>scores[2];
+			for(int i=0; i<3; i++) {
+				readByCin(scores[i]);
+			}
+			//			cin>>scores[0]>>scores[1]>>scores[2];
 
 		}
 		//
@@ -388,31 +417,43 @@ namespace SIMS {
 			cout<<"5.exit"<<endl;
 			cout<<"please select a service"<<endl;
 			int num;
-			cin>>num;
-			cout<<"num: "<<num<<endl;
+			//			cin>>num;
+			readByCin(num);
+			//			cout<<"num: "<<num<<endl;
 			switch(num) {
 				case 1: {
 						cout<<"please enter studentID or student name"<<endl;
 						cout<<"1.studentID"<<endl;
 						cout<<"2.student name"<<endl;
 						int _num;
-						cin>>_num;
+						//						cin>>_num;
+						readByCin(_num);
 						Node* node;
-						cout<<"_num: "<<_num<<endl;
+						//						cout<<"_num: "<<_num<<endl;
 						switch(_num) {
 							case 1:
 								int studentID;
 								cout<<"please enter studentID"<<endl;
-								cin>>studentID;
+								//								cin>>studentID;
+								readByCin(studentID);
 								node = stulist.findStudent(studentID);
+								if(!node) {
+									cout<<"student is not found"<<endl;
+									break;
+								}
 								cout<<"the student that you find:"<<endl<<endl;
 								node->stu.displayInformation();
 								break;
 							case 2: {
 									string studentName;
 									cout<<"please enter student name"<<endl;
-									cin>>studentName;
+									//									cin>>studentName;
+									readByCin(studentName);
 									node = stulist.findStudent(studentName);
+									if(!node) {
+										cout<<"student is not found"<<endl;
+										break;
+									}
 									cout<<"the student that you find:"<<endl<<endl;
 									node->stu.displayInformation();
 									break;
@@ -442,18 +483,21 @@ namespace SIMS {
 						cout<<"1.studentID"<<endl;
 						cout<<"2.student name"<<endl;
 						int _num;
-						cin>>_num;
+						//						cin>>_num;
+						readByCin(_num);
 						switch(_num) {
 							case 1:
 								int studentID;
 								cout<<"please enter studentID"<<endl;
-								cin>>studentID;
+								//								cin>>studentID;
+								readByCin(studentID);
 								stulist.deleteOne(studentID);
 								break;
 							case 2: {
 									string studentName;
 									cout<<"please enter student name"<<endl;
-									cin>>studentName;
+									//									cin>>studentName;
+									readByCin(studentName);
 									stulist.deleteOne(studentName);
 									break;
 								}
@@ -482,8 +526,6 @@ namespace SIMS {
 
 			}
 			cout<<"press enter to continue"<<endl;
-			cout.flush();
-			getchar();
 			getchar();
 			system("clear");
 		}
@@ -499,18 +541,14 @@ namespace SIMS {
 
 
 
+
+
 int main() {
 	//	freopen("in.txt","r",stdin);
 	using namespace SIMS;
 	//	test();
-	//	menu();
-	while(1) {
-		int n;
-		cin>>n;
-		cout<<n<<endl;
-		getchar();
-		getchar();
-	}
+	menu();
+
 
 
 	return 0;
